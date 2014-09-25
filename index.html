@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<title>three.js css3d - periodic table</title>
+		<link href="css/style.css" media="all" rel="stylesheet">
+		<style>
+		</style>
+	</head>
+	<body>
+		<script src="js/build/three.min.js"></script>
+		<script src="js/anim/tween.min.js"></script>
+		<script src="js/controls/TrackballControls.js"></script>
+		<script src="js/renderers/CSS3DRenderer.js"></script>
+		<script src="js/jquery-1.11.1.min.js"></script>
+
+		<div id="container"></div>
+		<div id="menu">
+			<button id="table">TABLE</button>
+			<button id="sphere">SPHERE</button>
+			<button id="helix">HELIX</button>
+			<button id="grid">GRID</button>
+			<button id="s1">1</button>
+			<button id="s2">2</button>
+			<button id="s3">3</button>
+			<button id="s4">4</button>
+		</div>
+
+		<script>
+
+			var table = [
+				"H", "Hydrogen", "1.00794", 1, 1,
+				"He", "Helium", "4.002602", 1, 2,
+				"Li", "Lithium", "6.941", 1, 3,
+				"H", "Hydrogen", "1.00794", 2, 1,
+				"He", "Helium", "4.002602", 2, 2,
+				"Li", "Lithium", "6.941", 2, 3,
+				"H", "Hydrogen", "1.00794", 3, 1,
+				"He", "Helium", "4.002602", 3, 2,
+				"Li", "Lithium", "6.941", 3, 3,
+				"H", "Hydrogen", "1.00794", 1, 7,
+				"He", "Helium", "4.002602", 2, 6,
+				"Li", "Lithium", "6.941", 3, 5,
+			];
+
+			var camera, scene, renderer;
+			var controls;
+
+			var objects = [];
+			var targets = { table: [], s1: [], sphere: [], helix: [], grid: [] };
+
+			init();
+			animate();
+
+			function init() {
+
+				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
+				//camera = new THREE.OrthographicCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
+				//camera.position.z = 2000;
+
+				scene = new THREE.Scene();
+
+
+				// table
+				for ( var i = 0; i < table.length; i += 5 ) {
+
+					var element = document.createElement( 'div' );
+					element.className = 'element';
+					element.style.backgroundColor = 'rgba(0,127,127,' + ( Math.random() * 0.5 + 0.25 ) + ')';
+
+					var number = document.createElement( 'div' );
+					number.className = 'number';
+					number.textContent = (i/5) + 1;
+					element.appendChild( number );
+
+					//var symbol = document.createElement( 'div' );
+					//symbol.className = 'symbol';
+					//symbol.textContent = table[ i ];
+					//element.appendChild( symbol );
+
+					var img = document.createElement( 'img' );
+					img.className = 'img';
+					img.src = "img/earth.jpg";
+					element.appendChild( img );
+
+
+					var details = document.createElement( 'div' );
+					details.className = 'details';
+					details.innerHTML = table[ i + 1 ] + '<br>' + table[ i + 2 ];
+					element.appendChild( details );
+
+					var object = new THREE.CSS3DObject( element );
+					object.position.x = Math.random() * 4000 - 2000;
+					object.position.y = Math.random() * 4000 - 2000;
+					object.position.z = Math.random() * 4000 - 2000;
+					scene.add( object );
+
+
+					objects.push( object );
+
+					// 俯瞰
+					var object = new THREE.Object3D();
+					object.position.x = ( table[ i + 3 ] * 350 ) - 1330;
+					object.position.y = - ( table[ i + 4 ] * 180 ) + 800;
+					targets.table.push( object );
+
+					// 第一象限
+					var s1_object = new THREE.Object3D();
+					s1_object.position.x = object.position.x + 600;
+					s1_object.position.y = object.position.y - 400;
+					targets.s1.push( s1_object );
+
+					// 第二象限
+					//var s2_object = new THREE.Object3D();
+					//s1_object.position.x = object.position.x + 600;
+					//s1_object.position.y = object.position.y - 400;
+					//targets.s1.push( s1_object );
+				}
+
+				// 矢印
+				var arrow = document.createElement('div');
+				arrow.id = 'arrow';
+				var index_era = 1990;
+				for ( var i = 0; i < 25; i ++ ) {
+					var square = document.createElement( 'div' );
+					square.className = 'square';
+					square.style.backgroundColor = '#0000ff';
+					square.innerHTML = index_era;
+					arrow.appendChild( square );
+					index_era++;
+				}
+				var square = document.createElement( 'div' );
+				square.className = 'right-arrow';
+				arrow.appendChild( square );
+
+				var time = document.createElement( 'div' );
+				time.innerHTML = "時間"
+				arrow.appendChild( time );
+
+				var object = new THREE.CSS3DObject( arrow );
+				object.position.x = -45;
+				object.position.y = -350;
+				scene.add( object );
+
+
+				// sphere
+
+				var vector = new THREE.Vector3();
+
+				for ( var i = 0, l = objects.length; i < l; i ++ ) {
+
+					var phi = Math.acos( -1 + ( 2 * i ) / l );
+					var theta = Math.sqrt( l * Math.PI ) * phi;
+
+					var object = new THREE.Object3D();
+
+					object.position.x = 800 * Math.cos( theta ) * Math.sin( phi );
+					object.position.y = 800 * Math.sin( theta ) * Math.sin( phi );
+					object.position.z = 800 * Math.cos( phi );
+
+					vector.copy( object.position ).multiplyScalar( 2 );
+
+					object.lookAt( vector );
+
+					targets.sphere.push( object );
+
+				}
+
+				// helix
+
+				var vector = new THREE.Vector3();
+
+				for ( var i = 0, l = objects.length; i < l; i ++ ) {
+
+					var phi = i * 0.175 + Math.PI;
+
+					var object = new THREE.Object3D();
+
+					object.position.x = 900 * Math.sin( phi );
+					object.position.y = - ( i * 8 ) + 450;
+					object.position.z = 900 * Math.cos( phi );
+
+					vector.x = object.position.x * 2;
+					vector.y = object.position.y;
+					vector.z = object.position.z * 2;
+
+					object.lookAt( vector );
+
+					targets.helix.push( object );
+
+				}
+
+				// grid
+
+				for ( var i = 0; i < objects.length; i ++ ) {
+
+					var object = new THREE.Object3D();
+					object.position.x = ( ( i % 5 ) * 400 ) - 800;
+					object.position.y = ( - ( Math.floor( i / 5 ) % 5 ) * 400 ) + 800;
+					object.position.z = ( Math.floor( i / 25 ) ) * 1000 - 2000;
+					targets.grid.push( object );
+
+				}
+
+				renderer = new THREE.CSS3DRenderer();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.domElement.style.position = 'absolute';
+				document.getElementById( 'container' ).appendChild( renderer.domElement );
+
+				// evnet listner
+				controls = new THREE.TrackballControls( camera, renderer.domElement );
+				controls.rotateSpeed = 0.5;
+				controls.minDistance = 200;
+				controls.maxDistance = 10000;
+				controls.addEventListener( 'change', render );
+
+				var button = document.getElementById( 'table' );
+				button.addEventListener( 'click', function ( event ) {
+					var object = new THREE.Object3D();
+					object.position.z = 2000;
+					transform( targets.table, 100, object);
+				}, false );
+
+				var button = document.getElementById( 'sphere' );
+				button.addEventListener( 'click', function ( event ) {
+					transform( targets.sphere, 2000 );
+				}, false );
+
+				var button = document.getElementById( 'helix' );
+				button.addEventListener( 'click', function ( event ) {
+					transform( targets.helix, 2000 );
+				}, false );
+
+				var button = document.getElementById( 'grid' );
+				button.addEventListener( 'click', function ( event ) {
+					transform( targets.grid, 2000 );
+				}, false );
+
+				//initialize
+				var camera_object = new THREE.Object3D();
+				camera_object.position.z = 2000;
+				transform( targets.table, 100, camera_object);
+
+				//slide
+				var button = document.getElementById( 's1' );
+				button.addEventListener( 'click', function ( event ) {
+					var object = new THREE.Object3D();
+					object.position.z = 950;
+					transform( targets.s1, 100, object);
+					document.getElementById('arrow').style.display = 'block';
+
+				}, false );
+
+				var button = document.getElementById( 's2' );
+				button.addEventListener( 'click', function ( event ) {
+					new TWEEN.Tween( camera.position )
+						.to( { x: camera.position.x - 200, y: camera.position.y, z: camera.position.z }, 100 * 2 )
+						.easing( TWEEN.Easing.Exponential.InOut )
+						.start();
+				}, false );
+
+				var button = document.getElementById( 's3' );
+				button.addEventListener( 'click', function ( event ) {
+					new TWEEN.Tween( camera.position )
+						.to( { x: camera.position.x, y: camera.position.y + 200, z: camera.position.z }, 100 * 2 )
+						.easing( TWEEN.Easing.Exponential.InOut )
+						.start();
+				}, false );
+
+				var button = document.getElementById( 's4' );
+				button.addEventListener( 'click', function ( event ) {
+					new TWEEN.Tween( camera.position )
+						.to( { x: camera.position.x, y: camera.position.y - 200, z: camera.position.z }, 100 * 2 )
+						.easing( TWEEN.Easing.Exponential.InOut )
+						.start();
+				}, false );
+
+				window.addEventListener( 'resize', onWindowResize, false );
+
+			}
+
+			function transform( targets, duration, target_camera ) {
+				TWEEN.removeAll();
+				for ( var i = 0; i < objects.length; i ++ ) {
+					var object = objects[ i ];
+					var target = targets[ i ];
+					new TWEEN.Tween( object.position )
+						.to( { x: target.position.x, y: target.position.y, z: target.position.z }, Math.random() * duration + duration )
+						.easing( TWEEN.Easing.Exponential.InOut )
+						.start();
+					new TWEEN.Tween( object.rotation )
+						.to( { x: target.rotation.x, y: target.rotation.y, z: target.rotation.z }, Math.random() * duration + duration )
+						.easing( TWEEN.Easing.Exponential.InOut )
+						.start();
+				}
+				if (target_camera) {
+					camera_transform(target_camera, duration );
+				}
+				new TWEEN.Tween( this )
+					.to( {}, duration * 2 )
+					.onUpdate( render )
+					.start();
+			}
+
+			function camera_transform( target_camera, duration ) {
+				new TWEEN.Tween( camera.position )
+					.to( { x: target_camera.position.x, y: target_camera.position.y, z: target_camera.position.z }, duration * 2 )
+					.easing( TWEEN.Easing.Exponential.InOut )
+					.start();
+			}
+
+			function camera_transform( target_camera, duration ) {
+				new TWEEN.Tween( camera.position )
+					.to( { x: target_camera.position.x, y: target_camera.position.y, z: target_camera.position.z }, duration * 2 )
+					.easing( TWEEN.Easing.Exponential.InOut )
+					.start();
+			}
+
+			function onWindowResize() {
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				render();
+			}
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				TWEEN.update();
+
+				controls.update();
+
+			}
+
+			function render() {
+
+				renderer.render( scene, camera );
+
+			}
+
+		</script>
+	</body>
+</html>
