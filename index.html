@@ -15,7 +15,7 @@
 		<script src="js/renderers/CSS3DRenderer.js"></script>
 
 		<div id="container"></div>
-		<div id="menu">
+		<div id="menu" style="display: none">
 			<button id="table">TABLE</button>
 			<button id="grid">GRID</button>
 			<button id="s1">1</button>
@@ -27,26 +27,137 @@
 		<script>
 
 			var table = [
-				"1", "Hydrogen", "1.00794", 1, 1,
-				"2", "Helium", "4.002602", 1, 2,
-				"3", "Lithium", "6.941", 1, 3,
-				"4", "Hydrogen", "1.00794", 2, 1,
-				"5", "Helium", "4.002602", 2, 2,
-				"6", "Lithium", "6.941", 2, 3,
-				"7", "Hydrogen", "1.00794", 3, 1,
-				"8", "Helium", "4.002602", 3, 2,
-				"9", "Lithium", "6.941", 3, 3,
-				"10", "Hydrogen", "1.00794", 1, 7,
-				"11", "Helium", "4.002602", 2, 6,
-				"12", "Lithium", "6.941", 3, 5,
-				"13", "Hydrogen", "1.00794", 6, 1,
-				"14", "Helium", "4.002602", 6, 2,
-				"15", "Lithium", "6.941", 7, 1,
-				"16", "Lithium", "6.941", 7, 3,
-				"17", "Lithium", "6.941", 8, 2,
-				"18", "Hydrogen", "1.00794", 6, 5,
-				"19", "Helium", "4.002602", 7, 6,
-				"20", "Lithium", "6.941", 8, 7,
+				{
+					id: 1, title: "Windows95", url: "img/element/1.png", z:1, y:1
+				},
+				{
+					id: 2, title: "Oracle", url: "img/element/2.jpg", z:1, y:2
+				},
+				{
+					id: 3, title: "i-mode", url: "img/element/3.jpg", z:1, y:3
+				},
+				//4抜け
+				{
+					id: 5, title: "Yahoo!", url: "img/element/5.jpg", z:2, y:1
+				},
+				{
+					id: 6, title: "Google", url: "img/element/6.jpg", z:2, y:2
+				},
+				{
+					id: 7, title: "Facebook", url: "img/element/7.png", z:2, y:3
+				},
+				//8抜け
+				{
+					id: 9, title: "Twitter", url: "img/element/9.png", z:3, y:1
+				},
+				{
+					id: 10, title: "LINE", url: "img/element/10.png", z:3, y:2
+				},
+				{
+					id: 11, title: "パズドラ", url: "img/element/11.png", z:3, y:3
+				},
+				//12抜け
+				{
+					id: 13, title: "Macintosh", url: "img/element/13.png", z:1, y:7
+				},
+				{
+					id: 14, title: "GAME BOY", url: "img/element/14.jpg", z:1, y:6
+				},
+				//15抜け
+				{
+					id: 16, title: "国内PC", url: "img/element/16.jpg", z:2, y:7
+				},
+				{
+					id: 17, title: "ガラケー", url: "img/element/17.jpg", z:2, y:6
+				},
+				{
+					id: 18, title: "iPod", url: "img/element/18.jpg", z:2, y:5
+				},
+				//19抜け
+				{
+					id: 20, title: "スマフォ", url: "img/element/20.jpg", z:3, y:7
+				},
+				{
+					id: 21, title: "ウェアラブル", url: "img/element/21.png", z:3, y:5
+				},
+				//22抜け
+				{
+					id: 23, title: "TOY STORY", url: "img/element/23.jpg", z:7, y:2
+				},
+				{
+					id: 24, title: "UNIQLO", url: "img/element/24.gif", z:8, y:1
+				},
+				{
+					id: 25, title: "Media Art", url: "img/element/25.jpg", z:7, y:3
+				},
+				{
+					id: 26, title: "Andy Warhol", url: "img/element/26.jpg", z:8, y:7
+				},
+			];
+			var event_table = {
+				0: ["next_slide"],
+				4: [],
+				8: [],
+				12: ["next_slide"],
+				15: [],
+				19: [],
+				22: ["next_slide"],
+				27: ["next_slide"],
+				28: ["rotate_dice"],
+				29: ["rotate_dice"],
+				30: ["rotate_dice"],
+				31: ["dice_focus"],
+				32: ["dice_focus"],
+				33: ["dice_focus"],
+				34: ["dice_focus"],
+				35: ["fin"]
+			};
+			var cubeSize = 50;
+			var cubeSizeAfter = 200;
+			var cube_pos_x = 0;
+			var boxInfo = [
+				{
+					//url: 'img/1.gif',
+					position: [ -cubeSize+cube_pos_x, 0, 0 ],
+					rotation: [ 0, -Math.PI / 2, 0 ],
+					style_id: 'surface-1',
+					resize_param: { x:-1, y:0, z:0 }
+				},
+				{
+					//url: 'img/2.gif',
+					position: [ cubeSize+cube_pos_x, 0, 0 ],
+					rotation: [ 0, Math.PI / 2, 0 ],
+					style_id: 'surface-3',
+					resize_param: { x:1, y:0, z:0 }
+				},
+				{
+					//url: 'img/3.gif',
+					position: [ 0+cube_pos_x, cubeSize, 0 ],
+					rotation: [ Math.PI / 2, 0, Math.PI ],
+					style_id: 'surface-5',
+					resize_param: { x:0, y:1, z:0 }
+				},
+				{
+					//url: 'img/4.gif',
+					position: [ 0+cube_pos_x, -cubeSize, 0 ],
+					rotation: [ - Math.PI / 2, 0, Math.PI ],
+					style_id: 'surface-6',
+					resize_param: { x:0, y:-1, z:0 }
+				},
+				{
+					//url: 'img/5.gif',
+					position: [ 0+cube_pos_x, 0, cubeSize ],
+					rotation: [ 0, 0, 0 ],
+					style_id: 'surface-4',
+					resize_param: { x:0, y:0, z:1 }
+				},
+				{
+					//url: 'img/6.gif',
+					position: [ 0+cube_pos_x, 0, -cubeSize ],
+					rotation: [ 0, Math.PI, 0 ],
+					style_id: 'surface-2',
+					resize_param: { x:0, y:0, z:-1 }
+				}
 			];
 
 			var camera, scene, renderer;
@@ -54,7 +165,8 @@
 
 			var objects = [];
 			var arrow_object = {};
-			var targets = { table: [], s1: [], s2: [], s3: [], s4: [], grid: [] };
+			var surfaces = [];
+			var targets = { s1: [], s2: [], s3: [], s4: [] };
 			var pos_x = -600;
 
 			init();
@@ -62,37 +174,40 @@
 
 			function init() {
 
-				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
-				//camera = new THREE.OrthographicCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
-				//camera.position.z = 2000;
+				//======================================
+				// initilize all object
+				//======================================
+
+				//-------------
+				// camera
+				camera = new THREE.PerspectiveCamera( 
+					40, window.innerWidth / window.innerHeight, 1, 10000 );
 				scene = new THREE.Scene();
 
-
+				//-------------
 				// table
-				for ( var i = 0; i < table.length; i += 5 ) {
+				for ( var i = 0; i < table.length; i++ ) {
+					var table_info = table[i];
 					var element = document.createElement( 'div' );
+					element.id = 'element-'+table_info.id;
 					element.className = 'element';
-					element.style.backgroundColor = 'rgba(0,127,127,' + ( Math.random() * 0.5 + 0.25 ) + ')';
+					element.style.backgroundColor = 'rgba(255,255,255,' + ( 0.1 ) + ')';
 
+					/*
 					var number = document.createElement( 'div' );
 					number.className = 'number';
-					number.textContent = (i/5) + 1;
+					number.textContent = '00' + table_info.id + '~';
 					element.appendChild( number );
-
-					//var symbol = document.createElement( 'div' );
-					//symbol.className = 'symbol';
-					//symbol.textContent = table[ i ];
-					//element.appendChild( symbol );
+					*/
 
 					var img = document.createElement( 'img' );
 					img.className = 'img';
-					img.src = "img/earth.jpg";
+					img.src = table_info.url;
 					element.appendChild( img );
-
 
 					var details = document.createElement( 'div' );
 					details.className = 'details';
-					details.innerHTML = table[ i + 1 ] + '<br>' + table[ i + 2 ];
+					details.innerHTML = table_info.title;
 					element.appendChild( details );
 
 					var object = new THREE.CSS3DObject( element );
@@ -104,13 +219,10 @@
 
 					// 俯瞰
 					var object = new THREE.Object3D();
-					//object.position.x = ( (3-(table[ i + 3 ]%3)) * 350 ) - 1330;
-					object.position.x = (table[ i + 3 ]%3 == 0) ?
-						( 3 * 350 ) - 1330 : (table[ i + 3 ]%3 * 350 ) - 1330;
-					object.position.y = - ( table[ i + 4 ] * 180 ) + 800;
-					//object.position.z = ( (3-table[ i + 3 ]%3) * 200 ) - 900;
-					object.position.z = ( table[ i + 3 ] * 200 ) - 900;
-					targets.table.push( object );
+					object.position.x = (table_info['z']%3 == 0) ?
+						( 3 * 350 ) - 1330 : (table_info['z']%3 * 350 ) - 1330;
+					object.position.y = - ( table_info['y'] * 180 ) + 800;
+					object.position.z = ( table_info['z'] * 200 ) - 900;
 
 					// 第一象限
 					var s1_object = new THREE.Object3D();
@@ -133,6 +245,7 @@
 					targets.s3.push( s3_object );
 				}
 
+				//-------------
 				// z軸
 				var arrow_of_z = document.createElement('div');
 				arrow_of_z.id = 'z-arrow';
@@ -147,11 +260,18 @@
 				var z_right_arrow = document.createElement( 'div' );
 				z_right_arrow.className = 'right-arrow';
 				arrow_of_z.appendChild( z_right_arrow );
+				/*
+				var z_right_title = document.createElement( 'div' );
+				z_right_title.className = 'right-title';
+				z_right_title.innerHTML = "年代";
+				arrow_of_z.appendChild( z_right_title );
+				*/
 
 				var z_arrow = new THREE.CSS3DObject( arrow_of_z );
 				arrow_object.z = z_arrow;
 				scene.add( z_arrow );
 
+				//-------------
 				// y軸
 				var arrow_of_y = document.createElement('div');
 				arrow_of_y.id = 'y-arrow';
@@ -180,6 +300,7 @@
 				arrow_object.y = y_arrow;
 				scene.add( y_arrow );
 
+				//-------------
 				// x軸
 				var arrow_of_x = document.createElement('div');
 				arrow_of_x.id = 'x-arrow';
@@ -190,7 +311,7 @@
 				var x_left_arrow = document.createElement( 'div' );
 				x_left_arrow.className = 'left-arrow';
 				arrow_of_x.appendChild( x_left_arrow );
-				for ( var i = 0; i < 30; i ++ ) {
+				for ( var i = 0; i < 28; i ++ ) {
 					var square = document.createElement( 'div' );
 					square.className = 'square';
 					arrow_of_x.appendChild( square );
@@ -207,41 +328,9 @@
 				arrow_object.x = x_arrow;
 				scene.add( x_arrow );
 
+				//-------------
 				// cube
-				var cubeSize = 50;
-				var cube_pos_x = 0;
-				var boxInfo = [
-					{
-						url: 'img/1.gif',
-						position: [ -cubeSize+cube_pos_x, 0, 0 ],
-						rotation: [ 0, -Math.PI / 2, 0 ]
-					},
-					{
-						url: 'img/2.gif',
-						position: [ cubeSize+cube_pos_x, 0, 0 ],
-						rotation: [ 0, Math.PI / 2, 0 ]
-					},
-					{
-						url: 'img/3.gif',
-						position: [ 0+cube_pos_x, cubeSize, 0 ],
-						rotation: [ Math.PI / 2, 0, Math.PI ]
-					},
-					{
-						url: 'img/4.gif',
-						position: [ 0+cube_pos_x, -cubeSize, 0 ],
-						rotation: [ - Math.PI / 2, 0, Math.PI ]
-					},
-					{
-						url: 'img/5.gif',
-						position: [ 0+cube_pos_x, 0, cubeSize ],
-						rotation: [ 0, 0, 0 ]
-					},
-					{
-						url: 'img/6.gif',
-						position: [ 0+cube_pos_x, 0, -cubeSize ],
-						rotation: [ 0, Math.PI, 0 ]
-					}
-				];
+
 				//dummy
 				var dummy = document.createElement('div');
 				dummy.style.width = cubeSize * 2 + 'px';
@@ -249,21 +338,92 @@
 				var dice = new THREE.CSS3DObject(dummy);
 
 				for (var i = 0; i < boxInfo.length; i++) {
-					var surface = document.createElement('div');
-					var surface_id = "surface-" + (i+1);
-					surface.id = surface_id;
 					var info = boxInfo[i];
+					var surface = document.createElement('div');
+					surface.id = info.style_id;
+
+					// key slide
+					var key_slide = document.createElement('div');
 					var img = document.createElement('img');
-					img.width = cubeSize*2;
-					img.src = info.url;
+					switch(surface.id) {
+						case "surface-1":
+							img.id = "surface-key-slide-1";
+							img.src = "img/surface/1.jpg";
+						break;
+
+						case "surface-2":
+							img.id = "surface-key-slide-2";
+							img.src = "img/surface/2.jpg";
+						break;
+
+						case "surface-3":
+							img.id = "surface-key-slide-3";
+							img.src = "img/surface/3.jpg";
+						break;
+
+						case "surface-4":
+							img.id = "surface-key-slide-4";
+							img.src = "img/surface/4.jpg";
+						break;
+					}
+					//surface.appendChild(key_slide);
 					surface.appendChild(img);
 
 					var face = new THREE.CSS3DObject( surface );
 					face.position.fromArray(info.position);
 					face.rotation.fromArray(info.rotation);
 					dice.add(face);
-				}
+					surfaces.push(face);
 
+				}
+				dice.position.x = dice.position.x + pos_x;
+				dice.position.y = 50;
+				scene.add(dice);
+
+				//-------------
+				// area
+				var area = document.createElement( 'div' );
+				area.id = 'area-1';
+				var object = new THREE.CSS3DObject( area );
+				object.position.x = -400;
+				object.position.y = 385;
+				object.position.z = -450;
+				object.rotation.y = -1.5;
+				scene.add( object );
+
+
+				var area = document.createElement( 'div' );
+				area.id = 'area-2';
+				var object = new THREE.CSS3DObject( area );
+				object.position.x = -400;
+				object.position.y = 375;
+				object.position.z = 450;
+				object.rotation.y = -1.5;
+				scene.add( object );
+
+				var area = document.createElement( 'div' );
+				area.id = 'area-3';
+				var object = new THREE.CSS3DObject( area );
+				object.position.x = -400;
+				object.position.y = -300;
+				object.position.z = -450;
+				object.rotation.y = -1.5;
+				scene.add( object );
+
+				var area = document.createElement( 'div' );
+				area.id = 'area-4';
+				var object = new THREE.CSS3DObject( area );
+				object.position.x = -400;
+				object.position.y = -290;
+				object.position.z = 450;
+				object.rotation.y = -1.5;
+				scene.add( object );
+
+				//======================================
+				// rendering && controller
+				//======================================
+
+				//-------------
 				//rendering
 				renderer = new THREE.CSS3DRenderer();
 				renderer.setSize( window.innerWidth, window.innerHeight );
@@ -273,34 +433,27 @@
 
 				var camera_object = new THREE.Object3D();
 				camera_object.position.z = 2000;
-				transform( targets.table, 100, camera_object);
+				//transform( null, 1000, camera_object);
 
-				// evnet listner
+				//-------------
+				// controller
 				controls = new THREE.TrackballControls( camera, renderer.domElement );
 				controls.rotateSpeed = 0.5;
 				controls.minDistance = 200;
 				controls.maxDistance = 10000;
 				controls.addEventListener( 'change', render );
 
-				var button = document.getElementById( 'table' );
-				button.addEventListener( 'click', function ( event ) {
-					var object = new THREE.Object3D();
-					object.position.z = 2000;
-					transform( targets.table, 100, object);
-				}, false );
+				//======================================
+				// initilize all object
+				//======================================
 
-				var button = document.getElementById( 'grid' );
-				button.addEventListener( 'click', function ( event ) {
-					transform( targets.grid, 2000 );
-				}, false );
-
-
+				//-------------
 				// 1
 				var button = document.getElementById( 's1' );
 				button.addEventListener( 'click', function ( event ) {
 					//camera
 					var camera_obj = new THREE.Object3D();
-					camera_obj.position.z = 950;
+					camera_obj.position.z = 1050;
 
 					//arrow
 					var arrow_obj = {};
@@ -308,10 +461,11 @@
 					z_obj.position.x = -45;
 					z_obj.position.y = -350;
 					arrow_obj.z = z_obj;
-					transform( targets.s1, 100, camera_obj, arrow_obj);
+					transform( targets.s1, 1000, camera_obj, arrow_obj);
 					document.getElementById('z-arrow').style.display = 'block';
 				}, false );
 
+				//-------------
 				// 2
 				var button = document.getElementById( 's2' );
 				button.addEventListener( 'click', function ( event ) {
@@ -326,15 +480,16 @@
 					arrow_obj.z = z_obj;
 
 					var y_obj = new THREE.Object3D();
-					y_obj.position.x = -500;
+					y_obj.position.x = -550;
 					y_obj.position.y = 50;
 					arrow_obj.y = y_obj;
 
-					transform( targets.s2, 100, camera_obj, arrow_obj);
+					transform( targets.s2, 1000, camera_obj, arrow_obj);
 					document.getElementById('z-arrow').style.display = 'block';
 					document.getElementById('y-arrow').style.display = 'block';
 				}, false );
 
+				//-------------
 				// 3
 				var button = document.getElementById( 's3' );
 				button.addEventListener( 'click', function ( event ) {
@@ -368,26 +523,209 @@
 					document.getElementById('x-arrow').style.display = 'block';
 				}, false );
 
+				//-------------
 				// 4
 				var button = document.getElementById( 's4' );
 				button.addEventListener( 'click', function ( event ) {
 					document.getElementById('z-arrow').style.display = 'block';
 					document.getElementById('y-arrow').style.display = 'block';
 					document.getElementById('x-arrow').style.display = 'block';
-					dice.position.x = dice.position.x + pos_x;
-					scene.add(dice);
+					window.setTimeout(function() {
+						document.getElementById("area-1").style.display = 'block';
+						for (var i = 0; i < boxInfo.length; i++) {
+							var surface_id = "surface-" + (i+1);
+							var surface = document.getElementById( surface_id );
+							surface.style.display = 'block';
+						}
+					}, 1000);
 					camera.lookAt(new THREE.Vector3(pos_x, 0, 0))
 					var target_camera = new THREE.Object3D();
-					target_camera.position.x = -2500;
+					target_camera.position.x = -2300;
 					camera_transform(target_camera, 1000);
 				}, false );
 
+				//-------------
 				// keydown
-				var cnt_key_code_49 = 0;
-				var cnt_key_code_50 = 0;
-				var cnt_key_code_51 = 0;
+				var cnt_key_code_49 = 0; // 1
+				var cnt_key_code_50 = 0; // 2
+				var cnt_key_code_51 = 0; // 3
+				var cnt_key_code_39 = 0; // →
+				var cnt_key_code_38 = 0; // ↑
+				var cnt_slide_no = 0;
+				var cnt_rotation_dice = 0;
+				var cnt_dice_focus = 0;
 				window.addEventListener( 'keydown', function(event) {
 					console.log(event.keyCode);
+					// 本番
+					if (event.keyCode == 39) {
+						var event_info = event_table[cnt_key_code_39];
+						if (!event_info) {
+							var id = "element-" + cnt_key_code_39;
+							var element = document.getElementById(id);
+							element.style.display = 'block';
+						} else {
+							for (var i=0; i < event_info.length; i++) {
+								var event = event_info[i];
+								switch (event) {
+
+									//next_slide
+									case "next_slide":
+										cnt_slide_no++;
+										var id = "s" + cnt_slide_no;
+										var button = document.getElementById(id);
+										button.click();
+									break;
+
+									//rotate_dice
+									case "rotate_dice":
+										cnt_rotation_dice++;
+										var rotation_target = new THREE.Object3D();
+										rotation_target.rotation.y =  Math.PI / 2*cnt_rotation_dice;
+										console.log(rotation_target.rotation.y);
+										rotate_of(dice, rotation_target, 1000);
+										window.setTimeout(function() {
+											var id = "area-" + (cnt_rotation_dice+1);
+											var area = document.getElementById(id);
+											area.style.display = 'block';
+										}, 1000);
+									break;
+
+									//dice_focus
+									case "dice_focus":
+										cnt_dice_focus++;
+										var rotation_target = new THREE.Object3D();
+										rotation_target.rotation.y
+											=  Math.PI / 2*(cnt_rotation_dice + cnt_dice_focus);
+										console.log(rotation_target.rotation.y);
+										rotate_of(dice, rotation_target, 1000);
+										window.setTimeout(function() {
+											var id = "surface-key-slide-" + cnt_dice_focus;
+											var slide = document.getElementById(id);
+											slide.style.display = "block";
+										}, 1000);
+
+										if (cnt_dice_focus == 1) {
+											window.setTimeout(function() {
+												for (var i = 0; i < boxInfo.length; i++) {
+													var surface_id = "surface-" + (i+1);
+													var surface = document.getElementById(surface_id);
+													surface.style.width = cubeSizeAfter*2 + 'px';
+													surface.style.height = cubeSizeAfter*2 + 'px';
+
+													var face = surfaces[i];
+													var resize_param = boxInfo[i].resize_param;
+													var resize_val = cubeSizeAfter - cubeSize;
+													face.position.x = face.position.x + resize_val*resize_param.x;
+													face.position.y = face.position.y + resize_val*resize_param.y;
+													face.position.z = face.position.z + resize_val*resize_param.z;
+												}
+											}, 1000);
+
+											var camera_object = new THREE.Object3D();
+											camera_object.position.x = -1375;
+											camera_object.position.y = 110;
+											transform( null, 1000, camera_object);
+										}
+									break;
+
+									case "fin":
+										var camera_object = new THREE.Object3D();
+										camera_object.position.x = -2200;
+										camera_object.position.y = 40;
+										camera_object.position.z = -2600;
+										transform( null, 1000, camera_object);
+
+										var fin_slide = document.createElement( 'div' );
+										fin_slide.id = 'fin-slide';
+										var fin_img = document.createElement( 'img' );
+										fin_img.src = "img/key_slide/fin.jpg";
+										fin_img.style.width = "600px";
+										fin_img.style.height = "600px";
+										fin_slide.appendChild(fin_img);
+										var object = new THREE.CSS3DObject( fin_slide );
+										object.position.x = -1000;
+										object.position.y = 0;
+										object.position.z = -2000;
+										object.rotation.y = -2.5;
+										scene.add( object );
+									break;
+								}
+							}
+						}
+						cnt_key_code_39++;
+					}
+					if (event.keyCode == 38) {
+						// 初期時のみ有効
+						var key_slide_lock = false;
+						if (cnt_key_code_39 == 0) {
+							key_slide_lock = true;
+							cnt_key_code_38++;
+							var key_slide = document.createElement( 'div' );
+							key_slide.id = 'key-slide-'+cnt_key_code_38;
+							var img = document.createElement( 'img' );
+							img.id = 'img-' + key_slide.id;
+							switch (cnt_key_code_38) {
+								case 1:
+									img.src = "img/key_slide/1.jpg";
+									img.style.width = "600px";
+									img.style.height = "600px";
+									key_slide.appendChild(img);
+
+									var object = new THREE.CSS3DObject( key_slide );
+									object.position.x = 25;
+									object.position.y = 0;
+									object.position.z = 4000;
+									scene.add( object );
+									var camera_object = new THREE.Object3D();
+									camera_object.position.z = 4910;
+									transform( null, 1000, camera_object);
+
+									break;
+
+								case 2:
+									img.src = "img/key_slide/2.jpg";
+									img.style.width = "600px";
+									img.style.height = "600px";
+									key_slide.appendChild(img);
+
+									key_slide.appendChild(img);
+									var object = new THREE.CSS3DObject( key_slide );
+									object.position.x = 25;
+									object.position.y = 0;
+									object.position.z = 3000;
+									scene.add( object );
+									var camera_object = new THREE.Object3D();
+									camera_object.position.z = 3910;
+									transform( null, 1000, camera_object);
+
+									break;
+
+								case 3:
+									img.src = "img/key_slide/3.jpg";
+									img.style.width = "600px";
+									img.style.height = "600px";
+									key_slide.appendChild(img);
+
+									var object = new THREE.CSS3DObject( key_slide );
+									object.position.x = 25;
+									object.position.y = 0;
+									object.position.z = 2000;
+									scene.add( object );
+									var camera_object = new THREE.Object3D();
+									camera_object.position.z = 2910;
+									transform( null, 1000, camera_object);
+									break;
+
+								case 4:
+									var slide_3_img = document.getElementById('img-key-slide-3')
+									slide_3_img.src = "img/key_slide/4.jpg";
+									break;
+							}
+						} else if(cnt_key_code_39 > 27) {
+						}
+					}
+					if (event.keyCode == 40) {
+					}
 					//dice debug
 					if (event.keyCode == 49) {
 						if (dice) {
@@ -412,23 +750,12 @@
 					}
 				});
 				window.addEventListener( 'resize', onWindowResize, false );
-
 			}
 
-			function transform( targets, duration, target_camera, target_arrow ) {
-				TWEEN.removeAll();
-				for ( var i = 0; i < objects.length; i ++ ) {
-					var object = objects[ i ];
-					var target = targets[ i ];
-					new TWEEN.Tween( object.position )
-						.to( {
-							x: target.position.x,
-							y: target.position.y,
-							z: target.position.z
-						}, Math.random() * duration + duration )
-						.easing( TWEEN.Easing.Exponential.InOut )
-						.start();
-					new TWEEN.Tween( object.rotation )
+			function rotate_of(obj, target, duration ) {
+				//TWEEN.removeAll();
+				if (target) {
+					new TWEEN.Tween( obj.rotation )
 						.to( {
 							x: target.rotation.x,
 							y: target.rotation.y,
@@ -436,6 +763,36 @@
 						}, Math.random() * duration + duration )
 						.easing( TWEEN.Easing.Exponential.InOut )
 						.start();
+					new TWEEN.Tween( this )
+						.to( {}, duration * 2 )
+						.onUpdate( render )
+						.start();
+				}
+			}
+
+			function transform( targets, duration, target_camera, target_arrow ) {
+				//TWEEN.removeAll();
+				if (targets) {
+					for ( var i = 0; i < objects.length; i ++ ) {
+						var object = objects[ i ];
+						var target = targets[ i ];
+						new TWEEN.Tween( object.position )
+							.to( {
+								x: target.position.x,
+								y: target.position.y,
+								z: target.position.z
+							}, Math.random() * duration + duration )
+							.easing( TWEEN.Easing.Exponential.InOut )
+							.start();
+						new TWEEN.Tween( object.rotation )
+							.to( {
+								x: target.rotation.x,
+								y: target.rotation.y,
+								z: target.rotation.z
+							}, Math.random() * duration + duration )
+							.easing( TWEEN.Easing.Exponential.InOut )
+							.start();
+					}
 				}
 				if (target_camera) {
 					camera_transform(target_camera, duration );

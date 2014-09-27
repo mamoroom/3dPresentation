@@ -3,7 +3,16 @@ html, body {
 }
 
 body {
-	background-color: #000000;
+	background:black;
+	background: -moz-linear-gradient(left top, #000, #333 30%, #666 55%, #999 70%, #fff 100%);
+	background: -webkit-linear-gradient(left top,  #000, #333 30%, #666 55%, #999 70%, #fff 100%);
+	background: linear-gradient(to bottom right,   #000, #333 30%, #666 55%, #999 70%, #fff 100%);
+	/*
+	background: -moz-linear-gradient(to right, black, white);
+	background: -webkit-linear-gradient(to right, black, white);
+	background: linear-gradient(to right,  #000, #333 30%, #666 40%, #999 70%, #fff 100%);
+	*/
+
 	margin: 0;
 	font-family: Helvetica, sans-serif;;
 	overflow: hidden;
@@ -44,7 +53,7 @@ a {
 	}
 	#z-arrow .square {
 		float: left ;
-		border: 1px solid rgba(127,255,255,0.25);
+		border: 1px solid rgba(0,0,0,0.25);
 		text-align: center;
 		cursor: default;
 		width: 30px;
@@ -53,7 +62,12 @@ a {
 		font-size: 5px;
 		color: #ffffff;
 		margin-top: 45px;
-		background-color: #0000ff;
+		background-color: #000000;
+	}
+	#x-arrow .right-title {
+		text-align: left;
+		font-size: 20px;
+		color: #ffffff;
 	}
 	#z-arrow .right-arrow {
 		margin-top: 45px;
@@ -61,7 +75,7 @@ a {
 		width: 0;
 		height: 0;
 		border: 10px solid transparent;
-		border-left-color: #0000ff;
+		border-left-color: #000000;
 	}
 
 #y-arrow {
@@ -75,7 +89,7 @@ a {
 		height: 160px;
 	}
 	#y-arrow .square {
-		border: 1px solid rgba(127,255,255,0.25);
+		border: 1px solid rgba(0,0,0,0.25);
 		text-align: center;
 		cursor: default;
 		width: 15px;
@@ -83,16 +97,16 @@ a {
 		font-size: 5px;
 		margin-bottom: 7.2px;
 		color: #ffffff;
-		background-color: #ff0000;
+		background-color: #000000;
 	}
 	#y-arrow .top-title {
 		text-align: left;
-		font-size: 20px;
+		font-size: 30px;
 		color: #ffffff;
 	}
 	#y-arrow .bottom-title {
 		text-align: left;
-		font-size: 20px;
+		font-size: 30px;
 		color: #ffffff;
 	}
 	#y-arrow .top-arrow {
@@ -100,14 +114,14 @@ a {
 		width: 0;
 		height: 0;
 		border: 9px solid transparent;
-		border-bottom-color: #ff0000;
+		border-bottom-color: #000000;
 	}
 	#y-arrow .bottom-arrow {
 		margin-bottom: 7.2px;
 		width: 0;
 		height: 0;
 		border: 9px solid transparent;
-		border-top-color: #ff0000;
+		border-top-color: #000000;
 	}
 
 #x-arrow {
@@ -122,7 +136,7 @@ a {
 	}
 	#x-arrow .square {
 		float: left ;
-		border: 1px solid rgba(127,255,255,0.25);
+		border: 1px solid rgba(0,0,0,0.25);
 		text-align: center;
 		cursor: default;
 		width: 30px;
@@ -130,18 +144,18 @@ a {
 		margin-right: 7.2px;
 		font-size: 5px;
 		color: #ffffff;
-		background-color: #00ff00;
+		background-color: #000000;
 	}
 	#x-arrow .left-title {
 		margin-right: 7.2px;
 		float: left ;
 		text-align: left;
-		font-size: 20px;
+		font-size: 30px;
 		color: #ffffff;
 	}
 	#x-arrow .right-title {
 		text-align: left;
-		font-size: 20px;
+		font-size: 30px;
 		color: #ffffff;
 	}
 	#x-arrow .left-arrow {
@@ -150,7 +164,7 @@ a {
 		width: 0;
 		height: 0;
 		border: 10px solid transparent;
-		border-right-color: #00ff00;
+		border-right-color: #000000;
 	}
 	#x-arrow .right-arrow {
 		margin-right: 7.2px;
@@ -158,79 +172,232 @@ a {
 		width: 0;
 		height: 0;
 		border: 10px solid transparent;
-		border-left-color: #00ff00;
+		border-left-color: #000000;
 	}
 
-#surface-1 {
-}
-#surface-2 {
-}
-#surface-3 {
-}
-#surface-4 {
-}
-#surface-5 {
-}
-#surface-6 {
+#key-slide-1 {
+	width: 600px;
+	height: 600px;
+	text-align: center;
+	cursor: default;
+	background-color: #ffffff;
 }
 
+#key-slide-2 {
+	width: 600px;
+	height: 600px;
+	text-align: center;
+	cursor: default;
+	background-color: #ffffff;
+}
+
+#key-slide-3 {
+	width: 600px;
+	height: 600px;
+	text-align: center;
+	cursor: default;
+	background-color: #ffffff;
+}
+#fin-slide {
+	width: 600px;
+	height: 600px;
+	text-align: center;
+	cursor: default;
+	background-color: #ffffff;
+}
+
+#surface-key-slide-1 {
+	width: 400px;
+	height: 400px;
+	text-align: center;
+	cursor: default;
+	background-color: #ffffff;
+	display: none;
+}
+
+#surface-key-slide-2 {
+	width: 400px;
+	height: 400px;
+	text-align: center;
+	cursor: default;
+	background-color: #ffffff;
+	display: none;
+}
+
+#surface-key-slide-3 {
+	width: 400px;
+	height: 400px;
+	text-align: center;
+	cursor: default;
+	background-color: #ffffff;
+	display: none;
+	z-index: 2;
+}
+
+#surface-key-slide-4 {
+	width: 400px;
+	height: 400px;
+	text-align: center;
+	cursor: default;
+	background-color: #ffffff;
+	display: none;
+}
+	#surface-key-slide-4 .title {
+		margin-top: 250px;
+		font-size: 30px;
+	}
+
+
+#area-1 {
+	width: 870px;
+	height: 640px;
+	box-shadow: 0px 0px 12px rgba(255,0,0,0.9);
+	border: 1px solid rgba(255,0,0,0.25);
+	text-align: center;
+	cursor: default;
+	background-color: rgba(255,150,150,0.25);
+	display: none;
+}
+#area-2 {
+	width: 870px;
+	height: 620px;
+	box-shadow: 0px 0px 12px rgba(0,255,0,0.9);
+	border: 1px solid rgba(0,255,0,0.25);
+	text-align: center;
+	cursor: default;
+	background-color: rgba(150,255,150,0.25);
+	display: none;
+}
+#area-3 {
+	width: 870px;
+	height: 640px;
+	box-shadow: 0px 0px 12px rgba(0,0,255,0.9);
+	border: 1px solid rgba(0,0,255,0.25);
+	text-align: center;
+	cursor: default;
+	background-color: rgba(50,50,255,0.25);
+	display: none;
+}
+#area-4 {
+	width: 870px;
+	height: 620px;
+	box-shadow: 0px 0px 12px rgba(255,255,50,0.9);
+	border: 1px solid rgba(255,255,50,0.25);
+	text-align: center;
+	cursor: default;
+	background-color: rgba(255,255,150,0.25);
+	display: none;
+}
+
+#surface-1 {
+	width: 100px;
+	height: 100px;
+	box-shadow: 0px 0px 12px rgba(255,0,0,0.9);
+	border: 1px solid rgba(255,0,0,0.25);
+	text-align: center;
+	cursor: default;
+	background-color: rgba(255,150,150,0.5);
+	display: none;
+	z-index: 1;
+}
+#surface-2 {
+	width: 100px;
+	height: 100px;
+	box-shadow: 0px 0px 12px rgba(0,255,0,0.9);
+	border: 1px solid rgba(0,255,0,0.25);
+	text-align: center;
+	cursor: default;
+	background-color: rgba(150,255,150,0.5);
+	display: none;
+	z-index: 1;
+}
+#surface-3 {
+	width: 100px;
+	height: 100px;
+	box-shadow: 0px 0px 12px rgba(0,0,255,0.9);
+	border: 1px solid rgba(0,0,255,0.25);
+	text-align: center;
+	cursor: default;
+	background-color: rgba(50,50,255,0.5);
+	display: none;
+	z-index: 1;
+}
+#surface-4 {
+	width: 100px;
+	height: 100px;
+	box-shadow: 0px 0px 12px rgba(255,255,50,0.9);
+	border: 1px solid rgba(255,255,50,0.25);
+	text-align: center;
+	cursor: default;
+	background-color: rgba(255,255,150,0.5);
+	display: none;
+	z-index: 1;
+}
+#surface-5 {
+	width: 100px;
+	height: 100px;
+	box-shadow: 0px 0px 12px rgba(50,50,255,0.9);
+	border: 1px solid rgba(50,50,255,0.25);
+	text-align: center;
+	cursor: default;
+	background-color: rgba(50,150,255,0.5);
+	display: none;
+	z-index: 1;
+}
+#surface-6 {
+	width: 100px;
+	height: 100px;
+	box-shadow: 0px 0px 12px rgba(255,50,255,0.9);
+	border: 1px solid rgba(255,50,255,0.25);
+	text-align: center;
+	cursor: default;
+	background-color: rgba(255,150,255,0.5);
+	display: none;
+	z-index: 1;
+}
+
+
+
+
 .element {
-	width: 200px;
+	width: 180px;
 	height: 160px;
-	box-shadow: 0px 0px 12px rgba(0,255,255,0.5);
+	box-shadow: 0px 0px 12px rgba(0,255,255,0.9);
 	border: 1px solid rgba(127,255,255,0.25);
 	text-align: center;
 	cursor: default;
+	display: none;
 }
 
 .element:hover {
-	box-shadow: 0px 0px 12px rgba(0,255,255,0.75);
+	box-shadow: 0px 0px 12px rgba(0,255,255,1);
 	border: 1px solid rgba(127,255,255,0.75);
 }
 
 	.element .number {
 		position: absolute;
-		top: 20px;
-		right: 20px;
-		font-size: 12px;
-		color: rgba(127,255,255,0.75);
-	}
-
-	.element .symbol {
-		position: absolute;
-		top: 40px;
-		left: 0px;
-		right: 0px;
-		font-size: 60px;
-		font-weight: bold;
-		color: rgba(255,255,255,0.75);
-		text-shadow: 0 0 10px rgba(0,255,255,0.95);
+		top: 5px;
+		right: 10px;
+		font-size: 10px;
+		color: rgba(150,255,255,1);
 	}
 
 	.element .img {
 		position: absolute;
-		top: 40px;
-		left: 0px;
+		top: 7.5px;
+		left: 20px;
 		right: 0px;
-		width: 60px;
-		height: 60px
+		width: 120px;
+		height: 120px
 	}
 
 	.element .details {
 		position: absolute;
-		bottom: 15px;
+		bottom: 5px;
 		left: 0px;
 		right: 0px;
-		font-size: 12px;
-		color: rgba(127,255,255,0.75);
-	}
-	.element .details {
-		position: absolute;
-		bottom: 15px;
-		left: 0px;
-		right: 0px;
-		font-size: 12px;
-		color: rgba(127,255,255,0.75);
+		font-size: 20px;
+		color: rgba(150,255,255,1);
 	}
 
 button {
